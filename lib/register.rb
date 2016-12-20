@@ -1,7 +1,30 @@
 # レジスターを表すクラス
+#
+# ==== 使用例
+#
+# 500円玉5枚と100円玉を10枚入れたレジスターを作成する
+#
+#    register = Register.new(500 => 5, 100 => 10)
+#    register.drawer
+#    #=> { 1000 => 0, 500 => 5, 100 => 10 }
+#    register.sales_total
+#    #=> 0
+#
+# 続けてりんご（300円）3個とレモン（100円）2個を売り、1000円札1枚と500円玉1枚を受け取る<br>
+# お釣りは100円玉が4枚（1000 * 1 + 500 * 1 - 300 * 3 - 100 * 2 = 400）
+#
+#    register.sale(apple: 3, lemon: 2, payments: { 1000 => 1, 500 => 1 })
+#    #=> { 100 => 4 }
+#
+# ドロアの現金と売上額を確認する
+#
+#    register.drawer
+#    #=> { 1000 => 1, 500 => 6, 100 => 6 }
+#    register.sales_total
+#    #=> 1100
 class Register
   # 商品の種類と価格
-  PRICES = {
+  PRICES = { # :nodoc:
       apple: 300,
       banana: 200,
       lemon: 100
@@ -61,7 +84,7 @@ class Register
   # りんご3個とレモン2個を売り、1000円札1枚と500円玉1枚を受け取る<br>
   # お釣りは100円玉が4枚
   #
-  #    registey.sale(apple: 3, lemon: 2, payments: { 1000 => 1, 500 => 1 })
+  #    register.sale(apple: 3, lemon: 2, payments: { 1000 => 1, 500 => 1 })
   #    #=> { 100 => 4 }
   #
   # ==== 引数
