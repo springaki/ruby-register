@@ -3,7 +3,7 @@ Sample app for Nishiwaki.rb &amp; Kobe.rb
 
 Question is here:
 
-https://gist.github.com/JunichiIto/7f1cdf3b45d18200dfb0ea3506beee7d
+[レジスター問題](https://gist.github.com/JunichiIto/7f1cdf3b45d18200dfb0ea3506beee7d)
 
 ## Generate API document
 
