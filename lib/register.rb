@@ -23,13 +23,6 @@
 #    register.sales_total
 #    #=> 1100
 class Register
-  # 商品の種類と価格
-  PRICES = { # :nodoc:
-      apple: 300,
-      banana: 200,
-      lemon: 100
-  }.freeze
-
   # 累計売上額
   #
   # ==== 使用例
@@ -56,9 +49,6 @@ class Register
   #
   # * +hash+ - レジスターに格納する紙幣・硬貨の種類と枚数
   def initialize(cash = {})
-    @drawer = { 1000 => 0, 500 => 0, 100 => 0 }
-    @sales_total = 0
-    @drawer.merge!(cash)
   end
 
   # ドロアに格納されている現金
@@ -74,7 +64,6 @@ class Register
   #
   # * +hash+ - ドロアに格納されている紙幣・硬貨の種類と枚数
   def drawer
-    @drawer.dup
   end
 
   # 商品を購入する
@@ -96,25 +85,5 @@ class Register
   #
   # * +hash+ - お釣りとして返される紙幣・硬貨の種類と枚数
   def sale(apple: 0, banana: 0, lemon: 0, payments: {})
-    total = PRICES[:apple] * apple + PRICES[:banana] * banana + PRICES[:lemon] * lemon
-
-    payment = 0
-    payments.each do |money, amount|
-      payment += money * amount
-    end
-
-    @sales_total += total
-
-    payments.each do |money, amount|
-      @drawer[money] += amount
-    end
-
-    change_amount = (payment - total) / 100
-    @drawer[100] -= change_amount
-    if change_amount > 0
-      { 100 => change_amount }
-    else
-      {}
-    end
   end
 end
